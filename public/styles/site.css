@@ -6715,6 +6715,11 @@ button.close {
     display: none !important;
   }
 }
+body {
+  background-color: #34495e;
+  color: #ecf0f1;
+  font-family: 'Raleway', sans-serif;
+}
 #header {
   margin-top: 30px;
 }
@@ -6729,3 +6734,8 @@ button.close {
   max-width: 100%;
   height: auto;
 }
+.container {
+  margin: 0 auto;
+  width: 50vh;
+}
+@import url("https://fonts.googleapis.com/css?family=Raleway");
