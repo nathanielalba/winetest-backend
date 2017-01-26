@@ -22,6 +22,8 @@ var keystone = require('keystone');
 var middleware = require('./middleware');
 var importRoutes = keystone.importer(__dirname);
 
+var api = importRoutes('./api')
+
 // Common Middleware
 keystone.pre('routes', middleware.initLocals);
 keystone.pre('render', middleware.flashMessages);
@@ -31,12 +33,21 @@ var routes = {
 	views: importRoutes('./views'),
 };
 
+keystone.set('404', function(req, res, next) {
+	const response = {
+		status: 404,
+		error: 'Not found'
+	}
+	res.json(response)
+});
+
 // Setup Route Bindings
 exports = module.exports = function (app) {
 	// Views
 	app.get('/', routes.views.index);
 
-	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
-	// app.get('/protected', middleware.requireUser, routes.views.protected);
+	// for the api
 
+	app.get('/api/question', api.question.index);
+	app.post('/api/question', api.question.create);
 };
