@@ -1,7 +1,5 @@
 var keystone      = require('keystone');
 var Question      = keystone.list('Question');
-var Answer        = keystone.list('Answer');
-var RandomAnswer  = keystone.list('RandomAnswer');
 
 function shuffle(array) {
     let counter = array.length;
@@ -20,16 +18,15 @@ function shuffle(array) {
 }
 
 exports = module.exports = function(req, res) {
-  Question.model.find().populate('answer').exec((err, post) => {
+  let response;
+  Question.model.find().populate('answer wrongAnswers').exec((err, posts) => {
     if (err) {
       res.json({
         title: 'there was an error',
         error: err
       })
     } else {
-
-      const response = shuffle(post)
-      res.json(response)
+      res.json(shuffle(posts))
     }
   })
 }

@@ -1,10 +1,10 @@
 var keystone      = require('keystone');
 var Question      = keystone.list('Question');
 var Answer        = keystone.list('Answer');
-var RandomAnswer  = keystone.list('RandomAnswer');
+var WrongAnswer   = keystone.list('WrongAnswer');
 
 exports = module.exports = function(req, res) {
-  const fake = req.body.fakeAnswers;
+  const wrong = req.body.wrongAnswers;
 
   var newQuestion = new Question.model({
     text: req.body.title
@@ -15,19 +15,28 @@ exports = module.exports = function(req, res) {
     question: newQuestion
   })
 
-  newQuestion.answer = answer
-
   answer.save((err) => { err ? console.log(err) : console.log('everything was ok') })
 
-  for (var prop in fake) {
-    if(fake.hasOwnProperty(prop)) {
-      const ra = new RandomAnswer.model({
-        text: fake[prop]
+  let arr = [];
+  for (var prop in wrong) {
+    if(wrong.hasOwnProperty(prop)) {
+      const wa = new WrongAnswer.model({
+        text: wrong[prop],
+        question: newQuestion
       })
-      ra.save((err) => { err ? console.log(err) : console.log('random answer saved') })
+      console.log('here')
+      console.log(wa)
+
+      arr.push(wa)
+      wa.save((err) => { err ? console.log(err) : console.log('wrong answer saved') })
     }
   }
 
+  console.log('here is arr')
+  console.log(arr)
+
+  newQuestion.answer = answer
+  newQuestion.wrongAnswers = arr
   newQuestion.save(function(err) {
     res.json({
       status: 'created'

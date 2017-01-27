@@ -8,6 +8,7 @@
     "history": "^4.5.1",
     "keystone": "https://github.com/keystonejs/keystone.git",
     "lodash": "^4.13.1",
+    "mongoose-random": "^0.1.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-router": "^3.0.2",
