@@ -5,8 +5,8 @@ var Types = keystone.Field.Types;
 var Question = new keystone.List('Question');
 
 Question.add({
-  title: { type: String },
-  answer: { type: String }
+  text: { type: String },
+  answer: { type: Types.Relationship, ref: 'Answer' }
 });
 
 Question.defaultColumns = 'title, answer';
