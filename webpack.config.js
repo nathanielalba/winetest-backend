@@ -3,7 +3,10 @@ var webpack = require('webpack')
 
 module.exports = {
   devtool: 'eval',
-  entry: './src/index',
+  entry: [
+    'whatwg-fetch',
+    './src/index'
+  ],
   output: {
     path: path.join(__dirname, 'public/js'),
     filename: 'bundle.js'
